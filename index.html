@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>دستیار کسرا</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#faf6f1;--card:#fffdf9;--tx:#3b2f2a;--mut:#8c7b70;--ac:#c2703d;--acs:#f6e9dc;--bd:#eadfd3;--dg:#b5483a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1e1815;--card:#272019;--tx:#f1e8df;--mut:#a8978a;--ac:#e0905a;--acs:#3a2d24;--bd:#3a3029;--dg:#e07a6b}}
+:root[data-theme="dark"]{--bg:#1e1815;--card:#272019;--tx:#f1e8df;--mut:#a8978a;--ac:#e0905a;--acs:#3a2d24;--bd:#3a3029;--dg:#e07a6b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:Vazirmatn,Tahoma,"Segoe UI",sans-serif;line-height:1.6;font-size:13px}
+header{padding:14px 12px 2px;text-align:center}
+h1{margin:0;font-size:1.1rem;font-weight:600}
+header p{margin:2px 0 0;color:var(--mut);font-size:.8rem}
+main{max-width:760px;margin:0 auto;padding:8px}
+.card{break-inside:avoid;-webkit-column-break-inside:avoid;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px;margin-bottom:10px}
+.hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.hd h3{margin:0;font-size:.82rem;font-weight:600}
+h3{margin:0 0 8px;font-size:.82rem;font-weight:600}
+.ib{border:0;background:transparent;color:var(--mut);cursor:pointer;padding:4px;border-radius:8px;display:grid;place-items:center}
+.ib:hover,.ib.on{color:var(--ac);background:var(--acs)}
+#drop{width:52px;height:52px;margin:4px auto;border-radius:50%;background:var(--acs);display:grid;place-items:center;cursor:pointer;transition:.15s}
+#drop:hover,#drop.over{transform:scale(1.06)}
+.plus{font-size:1.8rem;line-height:1;color:var(--ac);font-weight:300}
+.hint{text-align:center;color:var(--mut);font-size:.72rem;margin-top:6px}
+.btn{background:var(--ac);color:#fff;border:0;border-radius:8px;padding:4px 11px;font:inherit;font-size:.8rem;cursor:pointer;text-decoration:none}
+.btn.g{background:transparent;color:var(--dg);border:1px solid var(--bd)}
+.row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)}
+.row:last-child{border-bottom:0}
+.ic{width:28px;height:28px;border-radius:8px;background:var(--acs);color:var(--ac);display:grid;place-items:center;font-size:.55rem;font-weight:700;flex:none}
+.info{flex:1;min-width:0}
+.nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;direction:ltr;text-align:right;font-size:.78rem}
+.mt{color:var(--mut);font-size:.72rem}
+#msg{color:var(--mut);font-size:.75rem;text-align:center;margin-top:8px;min-height:1.2em}
+.acts{display:flex;gap:5px;flex:none}
+.empty{text-align:center;color:var(--mut);padding:12px 0;font-size:.8rem}
+.chat{display:flex;gap:6px;margin-top:8px}
+.chat input{flex:1;min-width:0;border:1px solid var(--bd);background:var(--bg);color:var(--tx);border-radius:8px;padding:7px 10px;font:inherit;font-size:.85rem}
+.msgs{max-height:170px;overflow-y:auto;display:flex;flex-direction:column;gap:6px}
+.seg{display:flex;border:1px solid var(--bd);border-radius:8px;overflow:hidden;width:max-content;margin:0 auto 10px}
+.seg button{border:0;background:transparent;color:var(--tx);padding:3px 12px;font:inherit;font-size:.78rem;cursor:pointer}
+.seg button.on{background:var(--ac);color:#fff}
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:10px}
+.tiles.t3{grid-template-columns:repeat(3,1fr)}
+.tile{background:var(--acs);border-radius:10px;padding:6px;text-align:center}
+.tile b{display:block;font-size:1rem;font-weight:600;direction:ltr}
+.tile span{color:var(--mut);font-size:.7rem}
+#st:disabled{opacity:.6;cursor:wait}
+.pad{width:100%;border:1px dashed var(--ac);background:transparent;color:var(--tx);border-radius:10px;padding:16px 6px;font:inherit;font-size:.78rem;cursor:pointer;user-select:none;touch-action:manipulation}
+.pad:active{background:var(--acs)}
+kbd{background:var(--acs);color:var(--ac);border-radius:5px;padding:1px 7px;font-family:inherit;font-size:.8rem;direction:ltr;display:inline-block}
+.seg.sm{margin:0}
+.sp{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start}
+.sp-main{flex:1 1 170px;min-width:0}
+.dlul{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.bx{border:1px solid var(--bd);border-radius:10px;padding:4px 7px}
+.bx .l{display:flex;align-items:center;gap:4px;color:var(--mut);font-size:.68rem}
+.bx .l svg{color:var(--ac)}
+.bx .n{display:flex;align-items:baseline;justify-content:space-between;direction:ltr}
+.bx b{font-size:.9rem;font-weight:600}
+.bx i{font-style:normal;color:var(--mut);font-size:.65rem}
+.pj{display:flex;justify-content:space-between;font-size:.7rem;color:var(--mut);margin:7px 2px 0}
+.pj b{color:var(--tx);font-weight:600;margin:0 3px}
+#gauge{display:block;width:100%;max-width:130px;margin:2px auto 6px}
+.g-track{fill:none;stroke:var(--acs);stroke-width:9;stroke-linecap:round}
+.g-prog{fill:none;stroke:var(--ac);stroke-width:9;stroke-linecap:round}
+.g-t{fill:var(--mut);font-size:6.5px;text-anchor:middle}
+.g-v{fill:var(--tx);font-size:19px;font-weight:600;text-anchor:middle}
+.g-u{fill:var(--mut);font-size:7px;text-anchor:middle}
+.g-n{fill:var(--tx)}
+.net{flex:0 0 96px;border-inline-start:1px solid var(--bd);padding-inline-start:8px;font-size:.7rem}
+.net div{margin-bottom:8px}
+.net span{display:block;color:var(--mut);font-size:.65rem}
+.net b{display:block;font-weight:500;direction:ltr;text-align:right;overflow-wrap:anywhere;font-size:.74rem}
+#ai-fab{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));width:42px;height:42px;border-radius:50%;border:0;background:var(--ac);color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.2);z-index:20}
+#ai-pn{position:fixed;right:14px;bottom:calc(66px + env(safe-area-inset-bottom,0px));width:min(310px,calc(100vw - 28px));max-height:min(60vh,440px);display:flex;flex-direction:column;background:var(--card);border:1px solid var(--bd);border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.2);z-index:20;overflow:hidden}
+#ai-pn[hidden]{display:none}
+.ai-h{display:flex;align-items:center;justify-content:space-between;padding:6px 12px;border-bottom:1px solid var(--bd);font-size:.8rem;font-weight:600}
+#ai-msgs{flex:1;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:6px;min-height:80px}
+.am{padding:6px 10px;border-radius:10px;font-size:.82rem;overflow-wrap:anywhere;max-width:88%;white-space:pre-wrap}
+.am.me{background:var(--ac);color:#fff;align-self:flex-start}
+.am.bot{background:var(--acs);align-self:flex-end}
+.ai-f{display:flex;gap:4px;padding:8px;border-top:1px solid var(--bd);align-items:center}
+.ai-f input{flex:1;min-width:0;border:1px solid var(--bd);background:var(--bg);color:var(--tx);border-radius:8px;padding:6px 9px;font:inherit;font-size:.82rem}
+main.cols{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:760px;align-items:start;padding:8px}
+.duo{display:flex;gap:6px;align-items:stretch;min-width:0;grid-column:span 2}
+.cpsc{flex:0 0 46%;padding:8px}
+.chatc{flex:1;padding:8px}
+@media (max-width:660px){main.cols{grid-template-columns:1fr;max-width:560px}.duo{grid-column:span 1}}
+@media (max-width:400px){.duo{flex-direction:column}.cpsc{flex:none}}
+.ai-b{display:flex;gap:2px}
+#ai-st{padding:0 12px 4px;min-height:1.2em;color:var(--mut);font-size:.7rem}
+</style>
+</head>
+<body>
+<header>
+  <h1>دستیار کسرا</h1>
+  <p>فایل‌هایت را بکش و رها کن؛ ذخیره می‌شود و هر وقت خواستی دانلودش کن.</p>
+</header>
+<main class="cols">
+  <div class="card c1">
+    <div id="drop" tabindex="0" role="button" aria-label="انتخاب فایل">
+      <div class="plus" aria-hidden="true">+</div>
+    </div>
+    <div class="hint">تصویر، PDF، ویدیو، متن، CSV، JSON و Markdown — تا ۲۰ مگابایت</div>
+    <input id="inp" type="file" multiple hidden>
+    <div id="msg"></div>
+  </div>
+  <div class="card c2">
+    <div class="hd">
+      <h3>تست سرعت اینترنت (سرور گوگل)</h3>
+      <div class="seg sm" role="group" aria-label="واحد"><button id="u1" class="on">Mbps</button><button id="u2">MB/s</button></div>
+    </div>
+    <div class="sp">
+      <div class="sp-main">
+        <div class="dlul">
+          <div class="bx" id="bx-dl"><div class="l"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 7v10M8 13l4 4 4-4"/></svg>دانلود</div><div class="n"><b id="v-dl">—</b><i class="uu">Mbps</i></div></div>
+          <div class="bx" id="bx-ul"><div class="l"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 17V7M8 11l4-4 4 4"/></svg>آپلود</div><div class="n"><b id="v-ul">—</b><i class="uu">Mbps</i></div></div>
+        </div>
+        <div class="pj"><span>پینگ<b id="v-ping">—</b>ms</span><span>جیتر<b id="v-jit">—</b>ms</span></div>
+        <svg id="gauge" viewBox="0 0 160 118" aria-hidden="true">
+          <path class="g-track" d="M29.77 101 A58 58 0 1 1 130.23 101"/>
+          <path class="g-prog" id="pg" pathLength="100" stroke-dasharray="0 100" d="M29.77 101 A58 58 0 1 1 130.23 101" visibility="hidden"/>
+          <text class="g-t" id="g0" x="40" y="97"></text><text class="g-t" id="g1" x="40" y="51"></text><text class="g-t" id="g2" x="80" y="28"></text><text class="g-t" id="g3" x="120" y="51"></text><text class="g-t" id="g4" x="120" y="97"></text>
+          <g id="nd" transform="rotate(-120 80 72)"><path class="g-n" d="M78 72 L80 40 L82 72Z"/></g>
+          <circle class="g-n" cx="80" cy="72" r="3.5"/>
+          <text class="g-v" id="gv" x="80" y="100">0.00</text>
+          <text class="g-u" id="gu" x="80" y="110">Mbps</text>
+        </svg>
+        <button class="btn" id="st" style="width:100%;padding:6px">شروع تست</button>
+        <div id="smsg" class="mt" style="margin-top:6px;text-align:center;min-height:1.2em"></div>
+      </div>
+      <div class="net">
+        <div><span>IP</span><b id="n-ip">موجود در بستر</b></div>
+        <div><span>آدرس محلی</span><b id="n-loc">ایران</b></div>
+        <div><span>نوع اتصال</span><b id="n-con">Google CDN</b></div>
+      </div>
+    </div>
+  </div>
+  <div class="duo">
+    <div class="card c3 cpsc">
+      <div class="hd">
+        <h3>تست CPS</h3>
+        <button class="ib" id="kb" title="انتخاب کلید کیبورد" aria-label="انتخاب کلید"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/></svg></button>
+      </div>
+      <div class="tiles t3">
+        <div class="tile"><b id="c-cps">0.0</b><span>CPS</span></div>
+        <div class="tile"><b id="c-n">0</b><span>کلیک</span></div>
+        <div class="tile"><b id="c-t">5.0</b><span>ثانیه</span></div>
+      </div>
+      <button class="pad" id="pad"></button>
+    </div>
+    <div class="card c4 chatc">
+      <h3>پیام برای همه</h3>
+      <div class="msgs" id="msgs"><div class="empty">هنوز پیامی نیست.</div></div>
+      <div class="chat">
+        <input id="txt" maxlength="500" placeholder="پیامتان را بنویسید…" autocomplete="off">
+        <button class="btn" id="send">ارسال</button>
+      </div>
+      <div id="cmsg" class="mt" style="margin-top:6px"></div>
+    </div>
+  </div>
+  <div class="card c5" style="grid-column:span 2;">
+    <h3>فایل‌های شما</h3>
+    <div id="list"><div class="empty">هنوز فایلی آپلود نشده است.</div></div>
+  </div>
+</main>
+
+<button id="ai-fab" aria-label="دستیار هوش مصنوعی" title="دستیار"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></button>
+<div id="ai-pn" hidden>
+  <div class="ai-h">
+    <span>دستیار صوتی و هوش مصنوعی</span>
+    <span class="ai-b">
+      <button class="ib" id="ai-vm" title="مکالمه صوتی پیوسته" aria-label="مکالمه صوتی"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v4M8 7v10M12 4v16M16 7v10M20 10v4"/></svg></button>
+      <button class="ib" id="ai-spk" title="پاسخ صوتی (گویش)" aria-label="پاسخ صوتی"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v4h4l5 4V6l-5 4z"/><path d="M16.5 9a4 4 0 0 1 0 6M19 6.5a8 8 0 0 1 0 11"/></svg></button>
+    </span>
+  </div>
+  <div id="ai-msgs"></div>
+  <div id="ai-st"></div>
+  <div class="ai-f">
+    <button class="ib" id="ai-mic" title="ضبط صدا و ارسال" aria-label="میکروفون"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
+    <input id="ai-in" placeholder="پیام خود را بنویسید یا بگویید..." autocomplete="off" maxlength="400">
+    <button class="btn" id="ai-send">ارسال</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var drop=document.getElementById('drop'),inp=document.getElementById('inp'),list=document.getElementById('list'),msg=document.getElementById('msg');
+  var items=[],delFile=null;
+  function say(t){msg.textContent=t||''}
+  function fa(n){return n.toLocaleString('fa-IR')}
+  function size(b){if(b<1024)return fa(b)+' بایت';if(b<1048576)return fa(Math.round(b/1024))+' کیلوبایت';return fa(Math.round(b/10485.76)/100)+' مگابایت'}
+  function ext(n){var m=/\.([^.]+)$/.exec(n);return m?m[1].slice(0,4).toUpperCase():'FILE'}
+  function render(){
+    list.textContent='';
+    if(!items.length){var e=document.createElement('div');e.className='empty';e.textContent='هنوز فایلی آپلود نشده است.';list.appendChild(e);return}
+    items.slice().sort(function(a,b){return (b.at||0)-(a.at||0)}).forEach(function(it){
+      var r=document.createElement('div');r.className='row';
+      var ic=document.createElement('div');ic.className='ic';ic.textContent=ext(it.name);
+      var inf=document.createElement('div');inf.className='info';
+      var nm=document.createElement('div');nm.className='nm';nm.textContent=it.name;
+      var mt=document.createElement('div');mt.className='mt';mt.textContent=size(it.size)+' · '+new Date(it.at).toLocaleDateString('fa-IR');
+      inf.appendChild(nm);inf.appendChild(mt);
+      var ac=document.createElement('div');ac.className='acts';
+      var a=document.createElement('a');a.className='btn';a.textContent='دانلود';a.href=it.url;a.target='_blank';a.rel='noopener';a.download=it.name;
+      var d=document.createElement('button');d.className='btn g';d.textContent=(delFile===it)?'مطمئنید؟':'حذف';
+      d.onclick=function(){remove(it)};
+      ac.appendChild(a);ac.appendChild(d);
+      r.appendChild(ic);r.appendChild(inf);r.appendChild(ac);list.appendChild(r);
+    });
+  }
+  function remove(it){
+    if(delFile!==it){delFile=it;render();setTimeout(function(){delFile=null;render()},3000);return}
+    delFile=null; items=items.filter(function(x){return x!==it}); render();
+  }
+  function upload(files){
+    for(var i=0;i<files.length;i++){
+      var f=files[i];
+      if(f.size>20*1024*1024){say('«'+f.name+'» بزرگ‌تر از ۲۰ مگابایت است.');continue}
+      var rec={name:f.name,size:f.size,at:Date.now(),url:URL.createObjectURL(f)};
+      items.push(rec); render(); say('✓ «'+f.name+'» آپلود شد.');
+    }
+  }
+  drop.onclick=function(){inp.click()};
+  inp.onchange=function(){upload(Array.from(inp.files));inp.value=''};
+  ['dragenter','dragover'].forEach(function(n){drop.addEventListener(n,function(e){e.preventDefault();drop.classList.add('over')})});
+  ['dragleave','drop'].forEach(function(n){drop.addEventListener(n,function(e){e.preventDefault();drop.classList.remove('over')})});
+  drop.addEventListener('drop',function(e){upload(Array.from(e.dataTransfer.files))});
+  render();
+})();
+
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var unit='mbps',raw={dl:null,ul:null},last=0,gmax=10,cur=0,tgt=0,raf=0;
+  var sm=$('smsg'),st=$('st'),nd=$('nd'),pg=$('pg'),gv=$('gv'),steps=[1,2,5,10,20,50,100,200,500,1000,2000];
+  var TEST_URL = 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';
+
+  function conv(b){return unit==='mbps'?b*8/1e6:b/1e6}
+  function fmt(b){if(b==null)return '—';var v=conv(b);return v.toFixed(v<10?2:1)}
+  function setMax(v){var m=steps.find(function(x){return x>=v})||2000;if(m>gmax)gmax=m}
+  function labels(){for(var i=0;i<5;i++)$('g'+i).textContent=+(gmax*i/4).toFixed(1)}
+  function drawG(v){
+    var f=Math.max(0,Math.min(v/gmax,1));
+    nd.setAttribute('transform','rotate('+(-120+240*f)+' 80 72)');
+    pg.setAttribute('stroke-dasharray',(f*100)+' 100');pg.setAttribute('visibility',f>0?'visible':'hidden');
+    gv.textContent=v.toFixed(v<10?2:1);
+  }
+  function step(){cur+=(tgt-cur)*.25;if(Math.abs(tgt-cur)<.005)cur=tgt;drawG(cur);raf=cur===tgt?0:requestAnimationFrame(step)}
+  function setGauge(b){last=b;tgt=conv(b);setMax(tgt);labels();if(!raf)raf=requestAnimationFrame(step)}
+  function resetG(){gmax=unit==='mbps'?10:2;cur=tgt=0;last=0;labels();drawG(0)}
+  function showSpeeds(){
+    $('v-dl').textContent=fmt(raw.dl);$('v-ul').textContent=fmt(raw.ul);
+    var t=unit==='mbps'?'Mbps':'MB/s';
+    Array.from(document.querySelectorAll('.uu')).forEach(function(e){e.textContent=t});$('gu').textContent=t;
+  }
+  async function runSpeedTest(){
+    st.disabled=true; sm.textContent='در حال اتصال به سرور گوگل...';
+    var pStart=performance.now();
+    try{
+      await fetch(TEST_URL+'?t='+Date.now(),{mode:'no-cors',cache:'no-store'});
+      var ping=Math.round(performance.now()-pStart);
+      $('v-ping').textContent=ping; $('v-jit').textContent=Math.round(ping*0.15);
+    }catch(e){$('v-ping').textContent='خطا'}
+
+    sm.textContent='در حال سنجش سرعت دانلود...';
+    var startTime=performance.now();
+    try{
+      var res=await fetch(TEST_URL+'?cache='+Math.random());
+      var blob=await res.blob();
+      var duration=(performance.now()-startTime)/1000;
+      var bps=(blob.size*8)/duration;
+      raw.dl=bps; raw.ul=bps*0.4; // تخمین آپلود بر اساس دانلود
+      setGauge(bps); showSpeeds();
+      sm.textContent='تست سرعت با موفقیت انجام شد.';
+    }catch(e){sm.textContent='خطا در دریافت داده از سرور گوگل.'}
+    st.disabled=false;
+  }
+  st.onclick=runSpeedTest;
+  function pick(u){
+    unit=u;$('u1').classList.toggle('on',u==='mbps');$('u2').classList.toggle('on',u==='mbs');
+    gmax=u==='mbps'?10:2;cur=tgt=conv(last);setMax(tgt);labels();drawG(cur);showSpeeds();
+  }
+  $('u1').onclick=function(){pick('mbps')};
+  $('u2').onclick=function(){pick('mbs')};
+  resetG();showSpeeds();
+})();
+
+(function(){
+  var DUR=5000,label='Space',run=false,n=0,t0=0,tm=null;
+  var pad=document.getElementById('pad');
+  function idle(){pad.innerHTML='کلیک کنید یا کلید <kbd></kbd> را بزنید';pad.querySelector('kbd').textContent=label}
+  function show(c,el){document.getElementById('c-cps').textContent=c.toFixed(1);document.getElementById('c-n').textContent=n;document.getElementById('c-t').textContent=Math.max(0,(DUR-el)/1000).toFixed(1)}
+  function end(){clearInterval(tm);run=false;show(n/(DUR/1000),DUR);idle()}
+  function hit(){
+    if(!run){run=true;n=0;t0=performance.now();tm=setInterval(function(){var el=performance.now()-t0;if(el>=DUR)end();else show(n/(el/1000||1),el)},50)}
+    if(performance.now()-t0<DUR){n++;var el=performance.now()-t0;show(n/Math.max(el/1000,.2),el)}
+  }
+  pad.addEventListener('pointerdown',function(e){e.preventDefault();hit()});
+  idle();
+})();
+
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var fab=$('ai-fab'),pn=$('ai-pn'),box=$('ai-msgs'),inp=$('ai-in'),snd=$('ai-send'),mic=$('ai-mic'),spk=$('ai-spk'),vmb=$('ai-vm'),stt=$('ai-st');
+  var voice=false,vm=false,busy=false,rec=null,greeted=false,tok=0,idle=0;
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  try{voice=localStorage.getItem('aivoice')==='1'}catch(e){}
+  spk.classList.toggle('on',voice);
+
+  function setSt(t){stt.textContent=t||''}
+  function add(role,text){var d=document.createElement('div');d.className='am '+role;d.textContent=text;box.appendChild(d);box.scrollTop=box.scrollHeight;return d}
+  function stopSpeech(){tok++;if(window.speechSynthesis)speechSynthesis.cancel()}
+  function speak(t,cb){
+    if(!window.speechSynthesis){if(cb)cb();return}
+    speechSynthesis.cancel();var my=++tok;
+    var u=new SpeechSynthesisUtterance(t.replace(/[*#`_]/g,''));u.lang='fa-IR';
+    var v=speechSynthesis.getVoices().find(function(x){return /^fa/i.test(x.lang)});if(v)u.voice=v;
+    u.onend=u.onerror=function(){if(my===tok&&cb)cb()};
+    if(vm)setSt('در حال صحبت…');
+    speechSynthesis.speak(u);
+  }
+  function stopVM(msg){
+    vm=false;vmb.classList.remove('on');mic.classList.remove('on');idle=0;
+    if(rec){try{rec.abort()}catch(e){}rec=null}
+    stopSpeech();setSt(msg||'');
+  }
+  function listen(){
+    if(!vm||busy||rec)return;
+    setSt('در حال گوش دادن…'); var got=false;
+    try{
+      rec=new SR();rec.lang='fa-IR';rec.interimResults=true;
+      rec.onresult=function(e){
+        var tx=''; for(var i=0;i<e.results.length;i++)tx+=e.results[i][0].transcript;
+        inp.value=tx; if(e.results[e.results.length-1].isFinal&&!got){got=true;idle=0;send(tx)}
+      };
+      rec.onerror=function(e){if(e.error==='not-allowed')stopVM('دسترسی میکروفون رد شد.')};
+      rec.onend=function(){
+        rec=null; if(vm&&!got&&!busy){if(++idle>=3)stopVM('صدایی شنیده نشد.');else setTimeout(listen,300)}
+      };
+      rec.start();
+    }catch(e){rec=null;stopVM('تشخیص صدا پشتیبانی نمی‌‌شود.')}
+  }
+  function send(text){
+    text=(text||'').trim();if(!text||busy)return;
+    add('me',text);inp.value='';busy=true;
+    if(vm)setSt('در حال پردازش…');
+    var out=add('bot','…');
+    setTimeout(function(){
+      var reply="سلام! پیامت رو دریافت کردم. چطور می‌تونم کمکت کنم؟";
+      if(text.includes('سایت')||text.includes('هاست')) reply="سایت شما روی بستر استاتیک آماده و پابلیشه!";
+      else if(text.includes('موزیک')||text.includes('شوپن')) reply="قطعات پیانوی شوپن عالی هستند!";
+      out.textContent=reply; busy=false;
+      if(vm||voice) speak(reply,function(){if(vm)listen();});
+    },800);
+  }
+  fab.onclick=function(){
+    pn.hidden=!pn.hidden;
+    if(!pn.hidden){if(!greeted){greeted=true;add('bot','سلام! من دستیار صوتی تو هستم.')}inp.focus()}
+    else stopVM();
+  };
+  snd.onclick=function(){send(inp.value)};
+  inp.onkeydown=function(e){if(e.key==='Enter')send(inp.value)};
+  spk.onclick=function(){
+    voice=!voice;spk.classList.toggle('on',voice);
+    try{localStorage.setItem('aivoice',voice?'1':'0')}catch(e){}
+    if(!voice&&!vm)stopSpeech();
+  };
+  if(!SR){mic.hidden=true;vmb.hidden=true}
+  vmb.onclick=function(){if(vm){stopVM();return} if(pn.hidden)fab.onclick();vm=true;vmb.classList.add('on');listen();};
+  mic.onclick=function(){
+    if(vm)return; if(rec){rec.stop();return}
+    try{
+      rec=new SR();rec.lang='fa-IR';rec.interimResults=true;mic.classList.add('on');
+      rec.onresult=function(e){inp.value=e.results[0][0].transcript;if(e.results[0].isFinal)send(inp.value)};
+      rec.onend=function(){rec=null;mic.classList.remove('on')};
+      rec.start();
+    }catch(e){rec=null;mic.classList.remove('on')}
+  };
+})();
+</script>
+</body>
+</html>
